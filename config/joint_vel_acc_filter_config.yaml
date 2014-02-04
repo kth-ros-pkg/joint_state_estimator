@@ -1,0 +1,10 @@
+joint_names: [left_arm_1_joint, left_arm_2_joint, left_arm_3_joint, left_arm_4_joint, left_arm_5_joint, left_arm_6_joint, left_arm_7_joint]
+
+#variance in [rad]
+pos_meas_noise_var: 0.0000001 #0.001
+process_noise_var: [100.0, 100.0, 100.0] #[0.0, 0.0, 10.0]
+prior_var: [0.0001, 0.5, 0.5] #[0.0001, 0.5, 0.5]
+
+loop_frequency: 130
+
+delta_t: 0.00769

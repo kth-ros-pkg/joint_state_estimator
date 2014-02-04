@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node name="joint_vel_acc_estimator" pkg="dumbo_joint_vel_acc_estimator" type="joint_vel_acc_estimator_node" cwd="node" respawn="false" output="screen" >
+    <rosparam command="load" file="$(find dumbo_joint_vel_acc_estimator)/config/joint_vel_acc_filter_config.yaml" />
+    <remap from="/joint_vel_acc_estimator/state" to="/test_jointvelacc_filter/true_state"/>
+  </node>
+
+  <node name="test_jointvelacc_filter" pkg="dumbo_joint_vel_acc_estimator" type="test_jointvelacc_filter" cwd="node" respawn="false" output="screen" />
+
+</launch>

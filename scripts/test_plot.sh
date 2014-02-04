@@ -1,0 +1,3 @@
+rxplot /test_jointvelacc_filter/true_state/actual/positions[0],/joint_vel_acc_estimator/estimated_joint_state/actual/positions[0] /test_jointvelacc_filter/true_state/actual/velocities[0],/joint_vel_acc_estimator/estimated_joint_state/actual/velocities[0] /test_jointvelacc_filter/true_state/actual/accelerations[0],/joint_vel_acc_estimator/estimated_joint_state/actual/accelerations[0] -p 7 -r 20
+
+# rxplot /test_jointvelacc_filter/true_state/actual/positions[0] /test_jointvelacc_filter/true_state/actual/velocities[0] /test_jointvelacc_filter/true_state/actual/accelerations[0] -p 7 -r 100
