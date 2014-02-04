@@ -7,12 +7,12 @@
 
 
 #include <ros/ros.h>
-#include <dumbo_joint_vel_acc_estimator/JointVelAccEstimator.h>
-#include <pr2_controllers_msgs/JointTrajectoryControllerState.h>
+#include <dumbo_joint_state_estimator/JointStateEstimator.h>
+#include <control_msgs/JointTrajectoryControllerState.h>
 
 
 
-class JointVelAccEstNode{
+class JointStateEstimatorNode{
 
 public:
 	/// create a handle for this node, initialize node
@@ -25,19 +25,19 @@ public:
 	ros::Subscriber topicSub_JointState_;
 
 
-	JointVelAccEstNode()
+	JointStateEstimatorNode()
 	{
 		n_ = ros::NodeHandle("~");
 
-		topicPub_EstimatedJointStates_ = n_.advertise<pr2_controllers_msgs::JointTrajectoryControllerState>("estimated_joint_state", 1);
-		topicSub_JointState_ = n_.subscribe("state", 1, &JointVelAccEstNode::topicCallback_JointStates, this);
+		topicPub_EstimatedJointStates_ = n_.advertise<control_msgs::JointTrajectoryControllerState>("estimated_joint_state", 1);
+		topicSub_JointState_ = n_.subscribe("state", 1, &JointStateEstimatorNode::topicCallback_JointStates, this);
 
 		m_last_filter_update = ros::Time::now();
 
 		m_filters_initialized = false;
 	}
 
-	~JointVelAccEstNode()
+	~JointStateEstimatorNode()
 	{
 		for(unsigned int i=0; i<m_filters.size(); i++)
 			delete m_filters[i];
@@ -180,7 +180,7 @@ public:
 		for(unsigned int i=0; i<m_DOF; i++)
 		{
 			delete m_filters[i];
-			m_filters[i] = new JointVelAccEstimator();
+			m_filters[i] = new JointStateEstimator();
 			prior_mu[0] = m_joint_pos[i];
 			if(!m_filters[i]->Init(m_pos_meas_noise_var, m_process_noise_var, prior_mu, m_prior_var, m_delta_t))
 			{
@@ -193,7 +193,7 @@ public:
 		return true;
 	}
 
-	void topicCallback_JointStates(const pr2_controllers_msgs::JointTrajectoryControllerStatePtr &msg)
+	void topicCallback_JointStates(const control_msgs::JointTrajectoryControllerStatePtr &msg)
 	{
 		ROS_DEBUG("Received joint states");
 
@@ -255,7 +255,7 @@ public:
 			return;
 		}
 
-		pr2_controllers_msgs::JointTrajectoryControllerState estimated_joint_state_msg;
+		control_msgs::JointTrajectoryControllerState estimated_joint_state_msg;
 		estimated_joint_state_msg.header.stamp = ros::Time::now();
 		estimated_joint_state_msg.joint_names = m_joint_names;
 		estimated_joint_state_msg.actual.positions = m_filtered_joint_pos;
@@ -283,7 +283,7 @@ private:
 
 	double m_delta_t;
 
-	std::vector<JointVelAccEstimator*> m_filters;
+	std::vector<JointStateEstimator*> m_filters;
 
 
 	std::vector<double> m_joint_pos;
@@ -299,23 +299,23 @@ private:
 int main(int argc, char **argv) {
 
 	/// initialize ROS, specify name of node
-	ros::init(argc, argv, "joint_vel_acc_estimator");
+	ros::init(argc, argv, "joint_state_estimator");
 
-	JointVelAccEstNode joint_estimator_node;
-	if(!joint_estimator_node.getROSParameters())
+	JointStateEstimatorNode joint_state_estimator_node;
+	if(!joint_state_estimator_node.getROSParameters())
 	{
 		return -1;
 	}
 
 	double loop_frequency;
-	if(joint_estimator_node.n_.hasParam("loop_frequency"))
+	if(joint_state_estimator_node.n_.hasParam("loop_frequency"))
 	{
-		joint_estimator_node.n_.getParam("loop_frequency", loop_frequency);
+		joint_state_estimator_node.n_.getParam("loop_frequency", loop_frequency);
 	}
 
 	ros::Rate loop_rate(loop_frequency);
 
-	while(joint_estimator_node.n_.ok())
+	while(joint_state_estimator_node.n_.ok())
 	{
 		ros::spinOnce();
 		loop_rate.sleep();
