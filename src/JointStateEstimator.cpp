@@ -33,7 +33,7 @@
 
 
 #include <ros/ros.h>
-#include <dumbo_joint_state_estimator/joint_state_estimator.h>
+#include <dumbo_joint_state_estimator/JointStateEstimator.h>
 
 
 JointStateEstimator::JointStateEstimator() {

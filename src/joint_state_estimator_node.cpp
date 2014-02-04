@@ -182,7 +182,7 @@ public:
 			delete m_filters[i];
 			m_filters[i] = new JointStateEstimator();
 			prior_mu[0] = m_joint_pos[i];
-			if(!m_filters[i]->Init(m_pos_meas_noise_var, m_process_noise_var, prior_mu, m_prior_var, m_delta_t))
+			if(!m_filters[i]->init(m_pos_meas_noise_var, m_process_noise_var, prior_mu, m_prior_var, m_delta_t))
 			{
 				return false;
 			}
@@ -241,10 +241,10 @@ public:
 
 		for(unsigned int i=0; i<m_DOF; i++)
 		{
-			m_filters[i]->Update(m_joint_pos[i]);
-			m_filtered_joint_pos[i] = m_filters[i]->GetFilteredJointPos();
-			m_filtered_joint_vel[i] = m_filters[i]->GetFilteredJointVel();
-			m_filtered_joint_acc[i] = m_filters[i]->GetFilteredJointAcc();
+			m_filters[i]->update(m_joint_pos[i]);
+			m_filtered_joint_pos[i] = m_filters[i]->getFilteredJointPos();
+			m_filtered_joint_vel[i] = m_filters[i]->getFilteredJointVel();
+			m_filtered_joint_acc[i] = m_filters[i]->getFilteredJointAcc();
 		}
 	}
 
