@@ -2,8 +2,8 @@
 <launch>
 
   <!-- Joint velocity and acceleration estimator -->
-  <node name="left_arm_joint_state_estimator" pkg="dumbo_joint_vel_acc_estimator" type="joint_vel_acc_estimator_node" cwd="node" respawn="false" output="screen" >
-    <rosparam command="load" file="$(find dumbo_joint_vel_acc_estimator)/config/joint_vel_acc_filter_config.yaml" />
+  <node name="left_arm_joint_state_estimator" pkg="dumbo_joint_state_estimator" type="joint_state_estimator_node" cwd="node" respawn="false" output="screen" >
+    <rosparam command="load" file="$(find dumbo_joint_state_estimator)/config/joint_vel_acc_filter_config.yaml" />
     <remap from="/left_arm_joint_state_estimator/state" to="/left_arm_controller/state"/>
   </node>
 
