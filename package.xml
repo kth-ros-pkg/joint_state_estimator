@@ -1,8 +1,8 @@
 <package>
- <name> dumbo_joint_state_estimator </name>
+ <name> joint_state_estimator </name>
   <version>0.1.0</version>
   <description>
-    Kalman filter for estimating joint velocities and accelerations from joint position measurements.
+    Kalman filter for estimating joint velocities and accelerations from joint position encoder measurements.
   </description>
   <maintainer email="fevb@kth.se">Francisco Vina</maintainer>
   <license>BSD</license>

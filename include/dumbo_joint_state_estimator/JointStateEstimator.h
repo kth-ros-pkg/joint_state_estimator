@@ -39,6 +39,10 @@
 #include <bfl/model/linearanalyticmeasurementmodel_gaussianuncertainty.h>
 #include <bfl/pdf/linearanalyticconditionalgaussian.h>
 
+
+/* Estimates velocity and acceleration of a joint given
+joint position measurements from an encoder */
+
 class JointStateEstimator {
 public:
 	JointStateEstimator();

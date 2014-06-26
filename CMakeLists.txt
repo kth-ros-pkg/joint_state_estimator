@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(dumbo_joint_state_estimator)
+project(joint_state_estimator)
 
 find_package(catkin REQUIRED COMPONENTS roscpp control_msgs)
 
