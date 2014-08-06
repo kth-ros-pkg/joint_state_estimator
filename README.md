@@ -1,4 +1,4 @@
-dumbo_joint_state_estimator
+joint_state_estimator
 ===========================
 
 Kalman filter for estimating joint velocities and accelerations from joint position measurements.
