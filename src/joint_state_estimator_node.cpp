@@ -33,7 +33,7 @@
 
 
 #include <ros/ros.h>
-#include <dumbo_joint_state_estimator/JointStateEstimator.h>
+#include <joint_state_estimator/JointStateEstimator.h>
 #include <control_msgs/JointTrajectoryControllerState.h>
 
 
