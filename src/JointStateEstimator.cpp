@@ -66,11 +66,11 @@ bool JointStateEstimator::init(
 		const double &delta_t)
 {
 
-	if(m_initialized)
-	{
-		ROS_ERROR("Already initialized");
-		return false;
-	}
+    if(m_initialized)
+    {
+        ROS_ERROR("Already initialized");
+        return false;
+    }
 
 	if(prior_mu.size()!=3 || prior_var.size()!=3)
 	{
@@ -218,6 +218,34 @@ double JointStateEstimator::getFilteredJointAcc()
 	double filtered_joint_acc  = posterior_mean(3);
 
 	return filtered_joint_acc;
+}
+
+bool JointStateEstimator::reset(const std::vector<double> &prior_mu, const std::vector<double> &prior_var)
+{
+    if(!m_initialized)
+    {
+        ROS_ERROR("Not initialized, cannot reset filter");
+        return false;
+    }
+
+    // set the prior
+    BFL::Gaussian prior_temp = gaussianDiagonalCov(prior_mu, prior_var);
+
+    *m_prior = prior_temp;
+
+    m_filter->Reset(m_prior);
+
+}
+
+bool JointStateEstimator::reset()
+{
+    if(!m_initialized)
+    {
+        ROS_ERROR("Not initialized, cannot reset filter");
+        return false;
+    }
+
+    m_filter->Reset(m_prior);
 }
 
 

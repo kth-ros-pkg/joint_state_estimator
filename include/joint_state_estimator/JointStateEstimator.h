@@ -61,6 +61,11 @@ public:
 	double getFilteredJointVel();
 	double getFilteredJointAcc();
 
+    bool reset(const std::vector<double> &prior_mu,
+               const std::vector<double> &prior_var);
+
+    bool reset();
+
 	BFL::Gaussian gaussianDiagonalCov(const std::vector<double> &mu, const std::vector<double> &var);
 
 private:
